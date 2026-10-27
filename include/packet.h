@@ -13,10 +13,11 @@
 typedef enum {
     PKT_OK = 0,
     PKT_ERR_NULL,
-    PKT_ERR_INCOMPLETE,   /* need more bytes */
+    PKT_ERR_INCOMPLETE,   /* Needs more bytes */
     PKT_ERR_BAD_SYNC,
     PKT_ERR_BAD_LENGTH,
-    PKT_ERR_BAD_CRC
+    PKT_ERR_BAD_CRC,
+    PKT_ERR_BUF_TOO_SMALL
 } pkt_status_t;
 
 typedef struct {
@@ -27,6 +28,9 @@ typedef struct {
 
 /* Parse one packet from buf. On PKT_OK, *consumed = bytes used. */
 pkt_status_t packet_parse(const uint8_t *buf, size_t buf_len,
-                          packet_t *out, size_t *consumed);
+                            packet_t *out, size_t *consumed);
 
+/* Parse one packet from id, payload and payload_len. On PKT_OK, *written = bytes created. */
+pkt_status_t packet_build(uint8_t id, const uint8_t *payload, size_t payload_len,
+                            uint8_t *out_buf, size_t out_capacity, size_t *written);
 #endif

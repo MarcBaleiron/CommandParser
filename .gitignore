@@ -1,0 +1,25 @@
+# Build output
+/build/
+/cmake-build-*/
+
+# CMake generated files (for in-source builds)
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+Testing/
+
+# Compiled artifacts
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+*.exe
+
+# Visual Studio
+.vs/
+*.suo
+*.user

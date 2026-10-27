@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
+
 #include "crc16.h"
 
 int main(void)

@@ -15,3 +15,7 @@ enable_testing()
 add_executable(test_crc tests/test_crc.c)
 target_link_libraries(test_crc core)
 add_test(NAME crc COMMAND test_crc)
+
+add_executable(test_packet tests/test_packet.c)
+target_link_libraries(test_packet core)
+add_test(NAME packet COMMAND test_packet)

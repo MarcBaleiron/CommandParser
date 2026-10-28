@@ -6,15 +6,15 @@
 
 int main(void)
 {
-    const uint8_t payload[] = {0x10, 0x20, 0x30};
-    uint8_t buf[PKT_HEADER_LEN + PKT_MAX_PAYLOAD + PKT_CRC_LEN];
-    size_t written = 99;
+    const uint8_t payload[] = { 0x10, 0x20, 0x30 };
+    uint8_t       buf[PKT_HEADER_LEN + PKT_MAX_PAYLOAD + PKT_CRC_LEN];
+    size_t        written = 99;
 
     assert(packet_build(0x42, payload, sizeof payload, buf, sizeof buf, &written) == PKT_OK);
     assert(written == PKT_HEADER_LEN + sizeof payload + PKT_CRC_LEN);
 
-    packet_t packet = {0};
-    size_t consumed = 99;
+    packet_t packet   = { 0 };
+    size_t   consumed = 99;
 
     assert(packet_parse(NULL, written, &packet, &consumed) == PKT_ERR_NULL);
     assert(packet_parse(buf, written, NULL, &consumed) == PKT_ERR_NULL);
@@ -47,18 +47,17 @@ int main(void)
     assert(packet.id == 0x42);
     assert(packet.len == sizeof payload);
     assert(memcmp(packet.payload, payload, sizeof payload) == 0);
-    for (size_t i = sizeof payload; i < sizeof packet.payload; ++i) {
+    for (size_t i = sizeof payload; i < sizeof packet.payload; ++i)
+    {
         assert(packet.payload[i] == 0);
     }
 
     assert(packet_build(0x42, payload, sizeof payload, NULL, sizeof buf, &written) == PKT_ERR_NULL);
     assert(packet_build(0x42, payload, sizeof payload, buf, sizeof buf, NULL) == PKT_ERR_NULL);
     assert(packet_build(0x42, NULL, sizeof payload, buf, sizeof buf, &written) == PKT_ERR_NULL);
-    assert(packet_build(0x42, payload, PKT_MAX_PAYLOAD + 1, buf, sizeof buf, &written) ==
-           PKT_ERR_BAD_LENGTH);
-    assert(packet_build(0x42, payload, sizeof payload, buf,
-                        PKT_HEADER_LEN + sizeof payload + PKT_CRC_LEN - 1, &written) ==
-           PKT_ERR_BUF_TOO_SMALL);
+    assert(packet_build(0x42, payload, PKT_MAX_PAYLOAD + 1, buf, sizeof buf, &written) == PKT_ERR_BAD_LENGTH);
+    assert(packet_build(0x42, payload, sizeof payload, buf, PKT_HEADER_LEN + sizeof payload + PKT_CRC_LEN - 1, &written)
+           == PKT_ERR_BUF_TOO_SMALL);
 
     written = 99;
     assert(packet_build(0x42, NULL, 0, buf, sizeof buf, &written) == PKT_OK);

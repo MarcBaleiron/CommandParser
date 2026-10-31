@@ -5,7 +5,7 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 add_compile_options(-Wall -Wextra -Werror -Wpedantic)
 
-add_library(core src/crc16.c src/packet.c)
+add_library(core src/crc16.c src/packet.c src/ring_buffer.c)
 target_include_directories(core PUBLIC include)
 
 add_executable(CommandParser src/main.c)
@@ -19,3 +19,7 @@ add_test(NAME crc COMMAND tests_crc)
 add_executable(tests_packet tests/tests_packet.c)
 target_link_libraries(tests_packet core)
 add_test(NAME packet COMMAND tests_packet)
+
+add_executable(tests_rb tests/tests_rb.c)
+target_link_libraries(tests_rb core)
+add_test(NAME rb COMMAND tests_rb)

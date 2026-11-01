@@ -27,15 +27,7 @@ static const char *rb_status_name(rb_status_t status)
 /* Switch for translating bool values into names */
 static const char *rb_bool_name(bool boolean)
 {
-    switch (boolean)
-    {
-        case 0:
-            return "TRUE";
-        case 1:
-            return "FALSE";
-        default:
-            return "UNKNOWN_BOOLEAN";
-    }
+    return boolean ? "TRUE" : "FALSE";
 }
 
 /* Helper function for comparing two statuses */
@@ -114,7 +106,7 @@ static int check_bool_at(bool received, bool expected, const char *file, int lin
     else
     { /* If not equal return file, line and expected and received values */
         fprintf(stderr,
-                "Test failed, File: %s, Line: %d, Expected: %d, Received: %d.\n",
+                "Test failed, File: %s, Line: %d, Expected: %s, Received: %s.\n",
                 file,
                 line,
                 rb_bool_name(expected),

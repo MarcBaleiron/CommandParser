@@ -20,6 +20,10 @@ The ring buffer stores bytes in FIFO order and wraps indices at its capacity. It
 
 When full, it rejects new bytes with `RB_ERR_FULL`; it does not overwrite existing data. `rb_count(NULL)` and `rb_free(NULL)` return 0.
 
+## Memory pool
+
+The memory pool uses `uint16_t` block indices, with `MP_INVALID` (`0xFFFF`) reserved as the free-list terminator. Therefore, the maximum supported `block_count` is 65535, giving valid block indices from 0 through 65534. Ensure any count is within this range before converting it to the `uint16_t` parameter; a count of 65536 cannot be represented.
+
 ## Build and test
 
 ```sh

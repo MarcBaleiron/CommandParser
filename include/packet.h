@@ -9,6 +9,7 @@
 #define PKT_MAX_PAYLOAD 32
 #define PKT_HEADER_LEN  4 /* sync(2) + id(1) + len(1) */
 #define PKT_CRC_LEN     2
+#define PKT_MAX_LEN     ((size_t)PKT_HEADER_LEN + (size_t)PKT_MAX_PAYLOAD + (size_t)PKT_CRC_LEN)
 
 typedef enum
 {
@@ -18,7 +19,8 @@ typedef enum
     PKT_ERR_BAD_SYNC,
     PKT_ERR_BAD_LENGTH,
     PKT_ERR_BAD_CRC,
-    PKT_ERR_BUF_TOO_SMALL
+    PKT_ERR_BUF_TOO_SMALL,
+    PKT_ERR_INTERNAL
 } pkt_status_t;
 
 typedef struct
@@ -31,7 +33,7 @@ typedef struct
 /* Parse one packet from buf. On PKT_OK, *consumed = bytes used. */
 pkt_status_t packet_parse(const uint8_t *buf, size_t buf_len, packet_t *out, size_t *consumed);
 
-/* Parse one packet from id, payload and payload_len. On PKT_OK, *written = bytes created. */
+/* Build one packet from id, payload and payload_len. On PKT_OK, *written = bytes created. */
 pkt_status_t packet_build(uint8_t        id,
                           const uint8_t *payload,
                           size_t         payload_len,

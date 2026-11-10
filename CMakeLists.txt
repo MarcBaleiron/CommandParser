@@ -5,7 +5,7 @@ set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 add_compile_options(-Wall -Wextra -Werror -Wpedantic)
 
-add_library(core src/crc16.c src/packet.c src/ring_buffer.c src/mem_pool.c)
+add_library(core src/crc16.c src/packet.c src/ring_buffer.c src/mem_pool.c src/stream.c)
 target_include_directories(core PUBLIC include)
 
 add_executable(CommandParser src/main.c)
@@ -27,3 +27,7 @@ add_test(NAME rb COMMAND tests_rb)
 add_executable(tests_mp tests/tests_mp.c)
 target_link_libraries(tests_mp core)
 add_test(NAME mp COMMAND tests_mp)
+
+add_executable(tests_stream tests/tests_stream.c)
+target_link_libraries(tests_stream core)
+add_test(NAME stream COMMAND tests_stream)

@@ -24,6 +24,8 @@ static const char *pkt_status_name(pkt_status_t status)
             return "PKT_ERR_BAD_CRC";
         case PKT_ERR_BUF_TOO_SMALL:
             return "PKT_ERR_BUF_TOO_SMALL";
+        case PKT_ERR_INTERNAL:
+            return "PKT_ERR_INTERNAL";
         default:
             return "UNKNOWN_PKT_STATUS";
     }
